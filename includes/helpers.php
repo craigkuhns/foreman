@@ -17,6 +17,26 @@ function foreman_cpt_labels($singular, $plural) {
   );
 }
 
+function foreman_taxonomy_labels($singular, $plural) {
+  return array(
+    'name' => $plural,
+    'singular_name' => $singular,
+    'search_items' =>  "Search $plural",
+    'popular_items' => "Popular $plural",
+    'all_items' => "All $plural",
+    'parent_item' => null,
+    'parent_item_colon' => null,
+    'edit_item' => "Edit $singular", 
+    'update_item' => "Update $singular",
+    'add_new_item' => "Add New $singular",
+    'new_item_name' => "New $singular Name",
+    'separate_items_with_commas' => "Separate $singular with commas",
+    'add_or_remove_items' => "Add or remove $plural",
+    'choose_from_most_used' => "Choose from the most used $plural",
+    'menu_name' => $plural,
+  ); 
+}
+
 function foreman_template_path($template) {
   return FOREMAN_PATH.'templates/'.$template;
 }

@@ -1,6 +1,7 @@
 <?php
 class Foreman {
   static protected $_post_types;
+  static protected $_taxonomies;
   static protected $_widgets;
 
 
@@ -14,6 +15,10 @@ class Foreman {
 
   static public function register_post_type($post_type) {
     self::$_post_types[$post_type->name] = $post_type;
+  }
+
+  static public function register_taxonomy($taxonomy) {
+    self::$_taxonomies[$taxonomy->name] = $taxonomy;
   }
 
   static public function register_widget($widget_class) {
