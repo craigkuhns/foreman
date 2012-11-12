@@ -21,8 +21,10 @@ class Foreman {
   }
 
   static public function load_widgets() {
-    foreach (self::$_widgets as $widget_class) {
-      register_widget($widget_class);
+    if (isset(self::$_widgets) && is_array(self::$_widgets) && (!empty(self::$_widgets))) {
+      foreach (self::$_widgets as $widget_class) {
+        register_widget($widget_class);
+      }
     }
   }
 
