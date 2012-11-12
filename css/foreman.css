@@ -1,0 +1,166 @@
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+.cf:after { clear: both; }
+.cf { *zoom: 1; }
+.foreman-field-list {
+  margin: 0;
+  width: 100%;
+}
+.foreman-field-list .label {
+  display: block;
+  float: left;
+  width: 18%;
+}
+.foreman-field-list .label label {
+  display: block;
+  font-weight: bold;
+  padding: 5px 10px 0 10px;
+  text-align: right;
+}
+.foreman-field-list .input {
+  margin-left: 18%;
+  padding: 0 0 0 0;
+}
+.foreman-field-list .foreman-repeater {
+  margin-left: 18%;
+  padding: 0;
+}
+.foreman-field-list .foreman-repeater .foreman-repeater-block {
+  background-color: #fff;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+  padding: 5px 10px 10px 10px;
+}
+.foreman-field-list .foreman-repeater .label {
+  float: none;
+  width: auto;
+}
+.foreman-field-list .foreman-repeater .label label {
+  padding: 5px 0 0 0;
+  text-align: left;
+}
+.foreman-field-list .foreman-repeater .input {
+  margin-left: 0;
+  padding-right: 0;
+}
+.foreman-field-list .foreman-field-description {
+  clear: both;
+  color: #afafaf;
+  font-style: italic;
+  margin: 2px 0 0 0;
+}
+.foreman-field-list li {
+  border-bottom: 1px solid #e9e9e9;
+  margin: 0 0 5px 0;
+  padding: 0 0 5px 0;
+}
+.foreman-field-list input.text-small { width: 25%; }
+.foreman-field-list input.text-date { width: 25%; }
+.foreman-field-list input.text-datetime { width: 25%; }
+.foreman-field-list input.text-medium { width: 50%; }
+.foreman-field-list input.text-file { width: 50%; }
+.foreman-field-list input.text-colorpicker { width: 25%; }
+.foreman-field-list input.text { width: 100%; }
+.foremna-field-list input.text-money { width: 25%; }
+.foreman-field-list textarea.textarea { width: 100%; }
+.foreman-field-list textarea.textarea-code { width: 100%; }
+.foreman-field-list textarea.textarea-small { width: 25%; }
+.foreman-field-title { padding-left: 18%; }
+.foreman-field-title h2 {
+  margin: 0!important;
+  padding: 0!important;
+}
+.foreman-radio-input.inline, .foreman-checkbox-input.inline {
+  float: left;
+  width: 25%;
+}
+.foreman-radio-input label, .foreman-checkbox-input label {
+  display: block;
+  padding: 3px 10px 0 0;
+}
+.foreman-checkbox-input label { padding-top: 5px; }
+.foreman-field-list .mceIframeContainer { background-color: #fff; }
+a.font-awesome-icon { text-decoration: none; }
+a.destructive { color: #ff0000; }
+a.foreman-remove-repeater-block {
+  display: block;
+  float: right;
+  font-size: 16px;
+  height: 16px;
+  padding-top: 2px;
+  width: 16px;
+}
+a.foreman-add-repeater-block { float: right; }
+a.foreman-add-table-repeater-row { float: right; }
+.foreman-repeater.sortable .foreman-repeater-block {
+  padding-left: 20px;
+  position: relative;
+}
+.foreman-repeater.sortable .handle {
+  background-color: #f1f1f1;
+  border-radius: 3px;
+  bottom: 2px;
+  cursor: move;
+  left: 2px;
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  width: 15px;
+}
+.foreman-repeater.sortable .handle .up {
+  position: absolute;
+  top: 0;
+}
+.foreman-repeater.sortable .handle .down {
+  position: absolute;
+  bottom: 0;
+}
+p.foreman-uneditable-form-value {
+  margin: 5px 0 0 0;
+}
+.foreman-table-repeater {
+  clear: none;
+  margin-left: 18%;
+  width: 82%;
+}
+.foreman-table-repeater .foreman-field-description,
+.foreman-table-repeater .label { display: none; }
+.foreman-table-repeater .input { margin-left: 0; }
+.foreman-table-repeater p.foreman-uneditable-form-value { margin: 0; }
+.foreman-table-repeater input.text-small,
+.foreman-table-repeater input.text-date,
+.foreman-table-repeater input.text-datetime,
+.foreman-table-repeater input.text-medium,
+.foreman-table-repeater input.text-file,
+.foreman-table-repeater input.text-colorpicker,
+.foreman-table-repeater input.text,
+.foreman-table-repeater textarea.textarea,
+.foreman-table-repeater textarea.textarea-code,
+.foreman-table-repeater textarea.textarea-small { width: 100%; }
+.foreman-table-repeater .trash { font-size: 16px; }
+.foreman-table-repeater .handle:hover { cursor: move; }
+
+#side-sortables .foreman-field-list .label {
+  float: none;
+  width: 100%;
+}
+#side-sortables .foreman-field-list .label label {
+  padding-left: 0;
+  text-align: left;
+}
+#side-sortables .foreman-field-list .input { margin-left: 0; }
+#side-sortables .foreman-field-list input.text-small,
+#side-sortables .foreman-field-list input.text-date,
+#side-sortables .foreman-field-list input.text-datetime,
+#side-sortables .foreman-field-list input.text-medium,
+#side-sortables .foreman-field-list input.text-file,
+#side-sortables .foreman-field-list input.text-colorpicker,
+#side-sortables .foreman-field-list input.text,
+#side-sortables .foreman-field-list input.textarea,
+#side-sortables .foreman-field-list input.textarea-code,
+#side-sortables .foreman-field-list input.textarea-small {
+  width: 100%
+}
