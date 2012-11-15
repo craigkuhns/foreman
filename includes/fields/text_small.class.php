@@ -4,6 +4,7 @@ class ForemanTextSmallField extends ForemanField {
     parent::__construct($args);
     $this->template_path = foreman_template_path('fields/text_small.php');
     $this->widget_template_path = foreman_template_path('fields/widget/text_small.php');
+    $this->taxonomy_template_path = foreman_template_path('fields/taxonomy/text_small.php');
   }
 }
 

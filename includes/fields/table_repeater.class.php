@@ -7,6 +7,7 @@ class ForemanTableRepeaterField extends ForemanField {
   function __construct($args = array()) {
     parent::__construct($args);
     $this->template_path = foreman_template_path('fields/table_repeater.php');
+    $this->taxonomy_template_path = foreman_template_path('fields/taxonomy/table_repeater.php');
     $this->fields = $args['fields'];
     if (isset($args['sortable'])) $this->sortable = $args['sortable'];
     if (isset($args['singular'])) {

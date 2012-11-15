@@ -29,6 +29,11 @@ class ForemanField {
     include $this->widget_template_path;
   }
 
+  function render_for_taxonomy($value, $parent = null, $position = null) {
+    $field = $this;
+    include $this->taxonomy_template_path;
+  }
+
   function get_value($post_id) {
     return get_post_meta($post_id, $this->id, true);
   } 
@@ -36,8 +41,12 @@ class ForemanField {
   function save_for_metabox($new, $old, $post_id) {
     if (($new != '') && ($new != $old)) {
       update_post_meta($post_id, $this->id, $new);
-    } /*elseif ($new == '') {
-      delete_post_meta($post_id, $this-> id);
-    }*/
+    }
+  }
+
+  function save_for_taxonomy($new, $old, $term_id) {
+    if (($new != '') && ($new != $old)) {
+      foreman_update_tax_meta($term_id, $this->id, $new);
+    }
   }
 }

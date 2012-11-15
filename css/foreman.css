@@ -161,6 +161,5 @@ p.foreman-uneditable-form-value {
 #side-sortables .foreman-field-list input.text,
 #side-sortables .foreman-field-list input.textarea,
 #side-sortables .foreman-field-list input.textarea-code,
-#side-sortables .foreman-field-list input.textarea-small {
-  width: 100%
-}
+#side-sortables .foreman-field-list input.textarea-small { width: 100% }
+.foreman-taxonomy-field div.input { width: 95%; }

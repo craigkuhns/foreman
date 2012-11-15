@@ -94,3 +94,32 @@ function foreman_current_post_status($post, $post_type) {
     return $post->post_status;
   }
 }
+
+function foreman_get_all_tax_meta($term_id) {
+  $id = (is_object($term_id)) ? $term_id->term_id : $term_id;
+  return get_option('tax_meta_'.$id);
+}
+
+function foreman_get_tax_meta($term_id, $key, $multi = false) {
+  $id = (is_object($term_id)) ? $term_id->term_id : $term_id;
+  $meta = get_option('tax_meta_'.$id);
+  if (isset($meta[$key])) {
+    return $meta[$key];
+  } else {
+    return '';
+  }
+}
+
+function foreman_delete_tax_meta($term_id, $key) {
+  $meta = get_option('tax_meta_'.$term_id);
+  if (isset($meta[$key])) {
+    unset($meta[$key]);
+  }
+  update_option('tax_meta_'.$term_id, $meta);
+}
+
+function foreman_update_tax_meta($term_id, $key, $value) {
+  $meta = get_option('tax_meta_'.$term_id);
+  $meta[$key] = $value;
+  update_option('tax_meta_'.$term_id, $meta);
+}

@@ -4,6 +4,7 @@ class ForemanTextareaSmallField extends ForemanField {
     parent::__construct($args);
     $this->template_path = foreman_template_path('fields/textarea_small.php');
     $this->widget_template_path = foreman_template_path('fields/widget/textarea_small.php');
+    $this->taxonomy_template_path = foreman_template_path('fields/taxonomy/textarea_small.php');
   }
 
   function validate($value) {

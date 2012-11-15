@@ -4,6 +4,7 @@ class ForemanColorPickerField extends ForemanField {
     parent::__construct($args);
     $this->template_path = foreman_template_path('fields/colorpicker.php');
     $this->widget_template_path = foreman_template_path('fields/widget/colorpicker.php');
+    $this->taxonomy_template_path = foreman_template_path('fields/taxonomy/colorpicker.php');
   }
 
   function validate($value) {

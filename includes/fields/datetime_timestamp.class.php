@@ -4,6 +4,7 @@ class ForemanDateTimeTimestampField extends ForemanField {
     parent::__construct($args);
     $this->template_path = foreman_template_path('fields/datetime_timestamp.php');
     $this->widget_template_path = foreman_template_path('fields/widget/datetime_timestamp.php');
+    $this->taxonomy_template_path = foreman_template_path('fields/taxonomy/datetime_timestamp.php');
   }
 
   function validate($value) {

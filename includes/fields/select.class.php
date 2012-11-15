@@ -6,6 +6,7 @@ class ForemanSelectField extends ForemanField {
     parent::__construct($args);
     $this->template_path = foreman_template_path('fields/select.php');
     $this->widget_template_path = foreman_template_path('fields/widget/select.php');
+    $this->taxonomy_template_path = foreman_template_path('fields/taxonomy/select.php');
     $this->options = $args['options'];
   }
 

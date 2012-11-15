@@ -7,6 +7,7 @@ class ForemanRadioField extends ForemanField {
     parent::__construct($args);
     $this->template_path = foreman_template_path('fields/radio.php');
     $this->widget_template_path = foreman_template_path('fields/widget/radio.php');
+    $this->taxonomy_template_path = foreman_template_path('fields/taxonomy/radio.php');
     $this->options = $args['options'];
     if (isset($args['inline'])) $this->inline = $args['inline'];
   }
