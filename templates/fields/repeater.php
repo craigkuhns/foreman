@@ -32,7 +32,7 @@
               }
             ?>
             <li <?php echo foreman_html_attrs_from_array($attributes) ?>>
-              <?php echo $child_field->render($item[$child_field->id], $editable, true, $position) ?>
+              <?php echo $child_field->render($item[$child_field->id], $editable, $field, $position) ?>
             </li>
           <?php } ?>
         </ul>
