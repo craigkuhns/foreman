@@ -20,7 +20,20 @@
         <?php } ?>
         <ul class="foreman-repeater-block-fields">
           <?php foreach ($field->fields as $child_field) { ?>
-            <li class="cf"><?php echo $child_field->render($item[$child_field->id], $editable, true, $position) ?></li>
+            <?php
+              $attributes = array();
+              $attributes['id'] = foreman_field_wrapper_id($child_field->id, $field, $position);
+              $attributes['class'] = 'cf';
+              if (is_array($child_field->visible_on)) {
+                $attributes['class'] = $attributes['class'].' foreman-visible-on';
+                $attributes['data-visible-on-id'] = '#'.foreman_field_id($child_field->visible_on['id'], $field, $position);
+                $attributes['data-visible-on-value'] = join($child_field->visible_on['value'], ',');
+                $attributes['style'] = 'display: none;';
+              }
+            ?>
+            <li <?php echo foreman_html_attrs_from_array($attributes) ?>>
+              <?php echo $child_field->render($item[$child_field->id], $editable, true, $position) ?>
+            </li>
           <?php } ?>
         </ul>
       </li>
@@ -38,7 +51,20 @@
     <?php } ?>
     <ul class="foreman-repeater-block-fields">
       <?php foreach ($field->fields as $child_field) { ?>
-        <li class="cf"><?php echo $child_field->render('', $editable, $field) ?></li>
+        <?php
+          $attributes = array();
+          $attributes['id'] = foreman_field_wrapper_id($child_field->id, $field);
+          $attributes['class'] = 'cf';
+          if (is_array($child_field->visible_on)) {
+            $attributes['class'] = $attributes['class'].' foreman-visible-on';
+            $attributes['data-visible-on-id'] = '#'.foreman_field_id($child_field->visible_on['id'], $field);
+            $attributes['data-visible-on-value'] = join($child_field->visible_on['value'], ',');
+            $attributes['style'] = 'display: none;';
+          }
+        ?>
+        <li <?php echo foreman_html_attrs_from_array($attributes) ?>>
+          <?php echo $child_field->render('', $editable, $field) ?>
+        </li>
       <?php } ?>
     </ul>
   </li>

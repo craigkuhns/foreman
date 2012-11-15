@@ -37,25 +37,45 @@ function foreman_taxonomy_labels($singular, $plural) {
   ); 
 }
 
+function foreman_html_attrs_from_array($attrs) {
+  $ret = array();
+  foreach ($attrs as $key => $val) {
+    $ret[] = "$key='$val'";
+  }
+  return implode(' ', $ret);
+}
+
 function foreman_template_path($template) {
   return FOREMAN_PATH.'templates/'.$template;
 }
 
 function foreman_field_name($field, $parent=null, $position=null) {
+  $field_id = (is_object($field)) ? $field->id : $field; 
   if ($parent) {
     if (is_null($position)) $position = '{position-placeholder}';
-    return "{$parent->id}[$position][{$field->id}]";
+    return "{$parent->id}[$position][{$field_id}]";
   } else {
-    return $field->id;
+    return $field_id;
   }
 }
 
 function foreman_field_id($field, $parent=null, $position=null) {
+  $field_id = (is_object($field)) ? $field->id : $field;
   if ($parent) {
     if (is_null($position)) $position = '{position-placeholder}';
-    return "{$parent->id}-$position-{$field->id}";
+    return "{$parent->id}-$position-{$field_id}";
   } else {
-    return $field->id;
+    return $field_id;
+  }
+}
+
+function foreman_field_wrapper_id($field, $parent=null, $position=null) {
+  $field_id = (is_object($field)) ? $field->id : $field; 
+  if ($parent) {
+    if (is_null($position)) $position = '{position-placeholder}';
+    return "{$parent->id}-$position-{$field_id}-field-wrapper";
+  } else {
+    return $field_id.'-field-wrapper';
   }
 }
 

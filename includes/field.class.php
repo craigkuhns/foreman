@@ -5,9 +5,10 @@ class ForemanField {
   public $name = '';
   public $id = '';
   public $description = '';
+  public $visible_on = null;
 
   function __construct($args = array()) {
-    $default_arg_names = array('name', 'id', 'description');
+    $default_arg_names = array('name', 'id', 'description', 'visible_on');
     foreach ($args as $arg => $value) {
       if (in_array($arg, $default_arg_names)) $this->$arg = $value;
     }

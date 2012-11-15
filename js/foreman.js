@@ -5,7 +5,34 @@ jQuery(function() {
   file_uploader.init();
   colorpicker.init();
   sortables.init();
+  visible_on.init();
 });
+
+var visible_on = {
+  init: function() {
+    jQuery('li.foreman-visible-on').each(function() {
+      var el = jQuery(this);
+      jQuery(jQuery(el).attr('data-visible-on-id')).change(function() {
+        var visible_on_options = jQuery(el).attr('data-visible-on-value').split(',');
+        if (jQuery.inArray(jQuery(this).val(), visible_on_options) != -1) {
+          jQuery(el).show();
+        } else {
+          jQuery(el).hide();
+        }
+      });
+      
+      var visible_on_id = jQuery('el').attr('data-visible-on-id');
+      var current = jQuery(visible_on_id).val();
+      var visible_on_options = jQuery(el).attr('data-visible-on-value').split(',');
+      if (jQuery.inArray(current, visible_on_options) != -1) {
+          jQuery(visible_on_id).show();
+        } else {
+          jQuery(visible_on_id).hide();
+        }
+
+    });
+  }
+}
 
 var datepickers = {
   globaly_initialized: false,
@@ -87,6 +114,7 @@ var repeater = {
       jQuery(repeater_block).append(el_str);
       datepickers.init();
       colorpicker.init();
+      visible_on.init();
       jQuery(repeater_block).find('> li:last-child').hide().fadeIn();
       return false;
     });
@@ -116,6 +144,7 @@ var table_repeater = {
       jQuery(repeater_block).find('tbody').append(el_str);
       datepickers.init();
       colorpicker.init();
+      visible_on.init();
       jQuery(repeater_block).find('tbody tr:last-child').hide().fadeIn();
       return false;
     });

@@ -207,7 +207,18 @@ class ForemanPostType {
     foreach ($this->_meta_boxes[$meta_box_id]['fields'] as $field_id) {
       $field = $this->_fields[$field_id];
       $value = get_post_meta($post->ID, $field->id, true);
-      echo '<li class="cf">';
+
+      $attributes = array();
+      $attributes['id'] = foreman_field_wrapper_id($field->id);
+      $attributes['class'] = 'cf';
+      if (is_array($field->visible_on)) {
+        $attributes['class'] = $attributes['class'].' foreman-visible-on';
+        $attributes['data-visible-on-id'] = '#'.foreman_field_id($field->id);
+        $attributes['data-visible-on-value'] = join($field->visible_on['value'], ',');
+        $attributes['style'] = 'display: none;';
+      }
+
+      echo '<li '.foreman_html_attrs_from_array($attributes).'>';
       $field->render($value, foreman_meta_box_editable_for_status($this->_meta_boxes[$meta_box_id], foreman_current_post_status($post, $this)));
       echo '</li>';
     }
