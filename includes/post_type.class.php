@@ -218,7 +218,7 @@ class ForemanPostType {
         $attributes['style'] = 'display: none;';
       }
 
-      echo '<li '.foreman_html_attrs_from_array($attributes).'>';
+      echo '<li '.foreman_field_wrapper_attributes($field).'>';
       $field->render($value, foreman_meta_box_editable_for_status($this->_meta_boxes[$meta_box_id], foreman_current_post_status($post, $this)));
       echo '</li>';
     }

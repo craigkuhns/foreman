@@ -20,18 +20,7 @@
         <?php } ?>
         <ul class="foreman-repeater-block-fields">
           <?php foreach ($field->fields as $child_field) { ?>
-            <?php
-              $attributes = array();
-              $attributes['id'] = foreman_field_wrapper_id($child_field->id, $field, $position);
-              $attributes['class'] = 'cf';
-              if (is_array($child_field->visible_on)) {
-                $attributes['class'] = $attributes['class'].' foreman-visible-on';
-                $attributes['data-visible-on-id'] = '#'.foreman_field_id($child_field->visible_on['id'], $field, $position);
-                $attributes['data-visible-on-value'] = join($child_field->visible_on['value'], ',');
-                $attributes['style'] = 'display: none;';
-              }
-            ?>
-            <li <?php echo foreman_html_attrs_from_array($attributes) ?>>
+            <li <?php echo foreman_field_wrapper_attributes($child_field, $field, $position) ?>>
               <?php echo $child_field->render($item[$child_field->id], $editable, $field, $position) ?>
             </li>
           <?php } ?>
@@ -51,18 +40,7 @@
     <?php } ?>
     <ul class="foreman-repeater-block-fields">
       <?php foreach ($field->fields as $child_field) { ?>
-        <?php
-          $attributes = array();
-          $attributes['id'] = foreman_field_wrapper_id($child_field->id, $field);
-          $attributes['class'] = 'cf';
-          if (is_array($child_field->visible_on)) {
-            $attributes['class'] = $attributes['class'].' foreman-visible-on';
-            $attributes['data-visible-on-id'] = '#'.foreman_field_id($child_field->visible_on['id'], $field);
-            $attributes['data-visible-on-value'] = join($child_field->visible_on['value'], ',');
-            $attributes['style'] = 'display: none;';
-          }
-        ?>
-        <li <?php echo foreman_html_attrs_from_array($attributes) ?>>
+        <li <?php echo foreman_field_wrapper_attributes($child_field, $field) ?>>
           <?php echo $child_field->render('', $editable, $field) ?>
         </li>
       <?php } ?>

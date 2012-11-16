@@ -37,6 +37,19 @@ function foreman_taxonomy_labels($singular, $plural) {
   ); 
 }
 
+function foreman_field_wrapper_attributes($field, $parent = null, $position = null) {
+  $attributes = array();
+  $attributes['id'] = foreman_field_wrapper_id($field, $parent, $position);
+  $attributes['class'] = 'cf '.get_class($field);
+  if (is_array($field->visible_on)) {
+    $attributes['class'] = $attributes['class'].' foreman-visible-on';
+    $attributes['data-visible-on-id'] = '#'.foreman_field_id($field->visible_on['id'], $parent, $position);
+    $attributes['data-visible-on-value'] = join($field->visible_on['value'], ',');
+    $attributes['style'] = 'display: none;';
+  }
+  return foreman_html_attrs_from_array($attributes);
+}
+
 function foreman_html_attrs_from_array($attrs) {
   $ret = array();
   foreach ($attrs as $key => $val) {
@@ -51,7 +64,7 @@ function foreman_template_path($template) {
 
 function foreman_field_name($field, $parent=null, $position=null) {
   $field_id = (is_object($field)) ? $field->id : $field; 
-  if ($parent) {
+  if ($parent != null) {
     if (is_null($position)) $position = '{position-placeholder}';
     return "{$parent->id}[$position][{$field_id}]";
   } else {
@@ -61,7 +74,7 @@ function foreman_field_name($field, $parent=null, $position=null) {
 
 function foreman_field_id($field, $parent=null, $position=null) {
   $field_id = (is_object($field)) ? $field->id : $field;
-  if ($parent) {
+  if ($parent != null) {
     if (is_null($position)) $position = '{position-placeholder}';
     return "{$parent->id}-$position-{$field_id}";
   } else {
@@ -71,7 +84,7 @@ function foreman_field_id($field, $parent=null, $position=null) {
 
 function foreman_field_wrapper_id($field, $parent=null, $position=null) {
   $field_id = (is_object($field)) ? $field->id : $field; 
-  if ($parent) {
+  if ($parent != null) {
     if (is_null($position)) $position = '{position-placeholder}';
     return "{$parent->id}-$position-{$field_id}-field-wrapper";
   } else {
