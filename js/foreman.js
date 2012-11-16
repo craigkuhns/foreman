@@ -114,7 +114,7 @@ var repeater = {
       datepickers.init();
       colorpicker.init();
       visible_on.init();
-      jQuery(repeater_block).find('> li:last-child').hide().fadeIn();
+      jQuery(repeater_block).find('> li:last-child').hide().fadeIn().find('.ForemanWysiwygField .input').html('<p class="foreman-notice">Save this post in order to edit using the wysiwyg editor.</p>');
       return false;
     });
   }

@@ -163,3 +163,10 @@ p.foreman-uneditable-form-value {
 #side-sortables .foreman-field-list input.textarea-code,
 #side-sortables .foreman-field-list input.textarea-small { width: 100% }
 .foreman-taxonomy-field div.input { width: 95%; }
+.foreman-notice {
+  background-color: #D9EDF7;
+  border-color: #BCE8F1;
+  border-radius: 5px;
+  color: #3A87AD;
+  padding: 10px;
+}
