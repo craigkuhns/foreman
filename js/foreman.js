@@ -21,15 +21,14 @@ var visible_on = {
         }
       });
       
-      var visible_on_id = jQuery('el').attr('data-visible-on-id');
+      var visible_on_id = jQuery(el).attr('data-visible-on-id');
       var current = jQuery(visible_on_id).val();
       var visible_on_options = jQuery(el).attr('data-visible-on-value').split(',');
       if (jQuery.inArray(current, visible_on_options) != -1) {
-          jQuery(visible_on_id).show();
-        } else {
-          jQuery(visible_on_id).hide();
-        }
-
+        jQuery(el).show();
+      } else {
+        jQuery(el).hide();
+      }
     });
   }
 }
