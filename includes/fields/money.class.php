@@ -8,7 +8,7 @@ class ForemanMoneyField extends ForemanField {
   }
 
   function validate($value) {
-    return number_format($value, 2);
+    return number_format(str_replace('$', '', $value), 2);
   }
 }
 
