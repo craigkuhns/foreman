@@ -11,7 +11,7 @@ function foreman_cpt_labels($singular, $plural) {
     'view_item' => "View $singular",
     'search_items' => "Search $plural",
     'not_found' =>  "No ".strtolower($plural)." found",
-    'not_found_in_trash' => "No ".strtolower($plural)." found in Trash", 
+    'not_found_in_trash' => "No ".strtolower($plural)." found in Trash",
     'parent_item_colon' => "",
     'menu_name' => $plural
   );
@@ -26,7 +26,7 @@ function foreman_taxonomy_labels($singular, $plural) {
     'all_items' => "All $plural",
     'parent_item' => null,
     'parent_item_colon' => null,
-    'edit_item' => "Edit $singular", 
+    'edit_item' => "Edit $singular",
     'update_item' => "Update $singular",
     'add_new_item' => "Add New $singular",
     'new_item_name' => "New $singular Name",
@@ -34,7 +34,7 @@ function foreman_taxonomy_labels($singular, $plural) {
     'add_or_remove_items' => "Add or remove $plural",
     'choose_from_most_used' => "Choose from the most used $plural",
     'menu_name' => $plural,
-  ); 
+  );
 }
 
 function foreman_field_wrapper_attributes($field, $parent = null, $position = null) {
@@ -63,7 +63,7 @@ function foreman_template_path($template) {
 }
 
 function foreman_field_name($field, $parent=null, $position=null) {
-  $field_id = (is_object($field)) ? $field->id : $field; 
+  $field_id = (is_object($field)) ? $field->id : $field;
   if ($parent != null) {
     if (is_null($position)) $position = '{position-placeholder}';
     return "{$parent->id}[$position][{$field_id}]";
@@ -83,7 +83,7 @@ function foreman_field_id($field, $parent=null, $position=null) {
 }
 
 function foreman_field_wrapper_id($field, $parent=null, $position=null) {
-  $field_id = (is_object($field)) ? $field->id : $field; 
+  $field_id = (is_object($field)) ? $field->id : $field;
   if ($parent != null) {
     if (is_null($position)) $position = '{position-placeholder}';
     return "{$parent->id}-$position-{$field_id}-field-wrapper";
