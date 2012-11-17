@@ -156,3 +156,9 @@ function foreman_update_tax_meta($term_id, $key, $value) {
   $meta[$key] = $value;
   update_option('tax_meta_'.$term_id, $meta);
 }
+
+function foreman_truncate($str, $length=10, $trailing='...') {
+  $length -= mb_strlen($trailing);
+  if (mb_strlen($str) < $length) return $str;
+  return mb_substr($str,0,$length).$trailing;
+}
