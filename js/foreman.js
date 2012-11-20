@@ -1,11 +1,14 @@
 jQuery(function() {
-  repeater.init();  
+  repeater.init();
   table_repeater.init();
   datepickers.init();
   file_uploader.init();
   colorpicker.init();
   sortables.init();
   visible_on.init();
+  related_posts.init();
+
+  post_form.init();
 });
 
 var visible_on = {
@@ -20,7 +23,7 @@ var visible_on = {
           jQuery(el).hide();
         }
       });
-      
+
       var visible_on_id = jQuery(el).attr('data-visible-on-id');
       var current = jQuery(visible_on_id).val();
       var visible_on_options = jQuery(el).attr('data-visible-on-value').split(',');
@@ -154,5 +157,62 @@ var sortables = {
   init: function() {
     jQuery("ul.sortable").sortable({handle: ".handle"});
     jQuery("table.sortable tbody").sortable({handle: ".handle"});
+  }
+}
+
+var related_posts = {
+  init: function() {
+    jQuery(".foreman-related-posts-select .controls button.make-selection").live('click', function() {
+      var container = jQuery(this).parent().parent();
+      var available = jQuery(container).find("select.available");
+      var selected = jQuery(container).find("select.selected");
+
+      jQuery(available).find("option:selected").each(function() {
+        var id = jQuery(this).attr('value');
+        var text = jQuery(this).text();
+        jQuery(selected).append('<option value="'+id+'">'+text+'</option>');
+        jQuery(this).remove();
+      });
+      related_posts.set_selected(container);
+      return false;
+    });
+
+    jQuery(".foreman-related-posts-select .controls button.remove-selection").live('click', function() {
+      var container = jQuery(this).parent().parent();
+      var available = jQuery(container).find("select.available");
+      var selected = jQuery(container).find("select.selected");
+
+      jQuery(selected).find("option:selected").each(function() {
+        var id = jQuery(this).attr('value');
+        var text = jQuery(this).text();
+        jQuery(available).append('<option value="'+id+'">'+text+'</option>');
+        jQuery(this).remove();
+      });
+      related_posts.set_selected(container);
+      return false;
+    });
+  },
+
+  set_selected: function(container) {
+    var available = jQuery(container).find("select.available");
+    var selected = jQuery(container).find("select.selected");
+
+    jQuery(available).find('option').each(function() {
+      jQuery(this).attr('selected', false);
+    });
+
+    jQuery(selected).find('option').each(function() {
+      jQuery(this).attr('selected', 'selected');
+    });
+  }
+}
+
+var post_form = {
+  init: function() {
+    jQuery("form#post").submit(function() {
+      jQuery(this).find(".foreman-related-posts-select").each(function() {
+        related_posts.set_selected(this);
+      });
+    });
   }
 }

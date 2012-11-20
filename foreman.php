@@ -51,5 +51,6 @@ require_once('includes/fields/file.class.php');
 require_once('includes/fields/colorpicker.class.php');
 require_once('includes/fields/repeater.class.php');
 require_once('includes/fields/table_repeater.class.php');
+require_once('includes/fields/related_posts.class.php');
 
 Foreman::init();

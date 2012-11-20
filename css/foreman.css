@@ -170,3 +170,13 @@ p.foreman-uneditable-form-value {
   color: #3A87AD;
   padding: 10px;
 }
+.foreman-related-posts-select select {
+  float: left;
+  width: 40%;
+}
+.foreman-related-posts-select .controls {
+  float: left;
+  margin: 0 auto;
+  text-align: center;
+  width: 40px;
+}
