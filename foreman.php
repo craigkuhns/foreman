@@ -27,6 +27,7 @@ function load_foreman_first() {
 
 require_once('includes/core.php');
 require_once('includes/helpers.php');
+require_once('includes/ajax.php');
 require_once('includes/post_type.class.php');
 require_once('includes/taxonomy.class.php');
 require_once('includes/widget.class.php');
