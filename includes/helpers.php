@@ -1,4 +1,5 @@
 <?php
+
 function foreman_cpt_labels($singular, $plural) {
   return array(
     'name' => $plural,
@@ -161,4 +162,16 @@ function foreman_truncate($str, $length=10, $trailing='...') {
   $length -= mb_strlen($trailing);
   if (mb_strlen($str) < $length) return $str;
   return mb_substr($str,0,$length).$trailing;
+}
+
+function foreman_current_page_url() {
+  $page_url = 'http';
+  if ($_SERVER["HTTPS"] == "on") $page_url .= "s";
+  $page_url .= "://";
+  if ($_SERVER["SERVER_PORT"] != "80") {
+    $page_url .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+  } else {
+    $page_url .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+  }
+  return $page_url;
 }
