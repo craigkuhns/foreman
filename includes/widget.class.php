@@ -54,9 +54,13 @@ class ForemanWidget extends WP_Widget {
     extract($args);
     echo $before_widget;
     if (isset($instance['title']) && !empty($instance['title'])) {
-      echo $before_title.apply_filters('widget_title', $instance['title']).$after_title;
+      echo $before_title.$this->formated_title($instance).$after_title;
     }
     include $this->_widget_template;
     echo $after_widget;
+  }
+
+  public function formated_title($instance) {
+    return apply_filters('widget_title', $instance['title']);
   }
 }
