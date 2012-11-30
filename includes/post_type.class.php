@@ -17,8 +17,9 @@ class ForemanPostType {
     add_filter("manage_{$this->name}_posts_columns", array(&$this, 'manage_index_table_column_labels'));
     add_action("manage_{$this->name}_posts_custom_column", array(&$this, 'manage_index_table_column_values'), 10, 2);
     add_action('save_post', array(&$this, 'save'));
-    add_action('admin_head', array(&$this, 'replace_default_publish_box'), 100);    
+    add_action('admin_head', array(&$this, 'replace_default_publish_box'), 100);
     add_action('transition_post_status', array(&$this, 'do_transition'),10, 3);
+    add_action('save_post', array(&$this, 'after_save'), 1000);
   }
 
   function set_index_table_columns($columns) {
@@ -71,7 +72,7 @@ class ForemanPostType {
           if ($possible_target['to'] == $new_status_id && isset($possible_target['callback'])) {
             // This is a workaround because wordpress call the transition hook before
             // the save_post hook fires meaning transitions happen before post meta
-            // has a chance to be saved. Here I cache the transition info in the 
+            // has a chance to be saved. Here I cache the transition info in the
             // object and then add a another hook to run long after all the other save_post
             // hooks have run to actuall call the user defined transition function so
             // the post meta should all be saved.
@@ -290,5 +291,9 @@ class ForemanPostType {
     } else {
       $this->_transitions[$status] = $transition_details;
     }
+  }
+
+  function after_save($post_id) {
+    return;
   }
 }
