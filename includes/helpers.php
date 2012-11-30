@@ -175,3 +175,8 @@ function foreman_current_page_url() {
   }
   return $page_url;
 }
+
+function foreman_html_mail($to, $subject, $message, $headers=array('Content-type: text/html'), $attachments=array()) {
+  $headers = array_merge(array('Content-type: text/html'), $headers);
+  return wp_mail($to, $subject, $message, $headers, $attachments);
+}
