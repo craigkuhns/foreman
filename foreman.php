@@ -25,12 +25,32 @@ function load_foreman_first() {
 	}
 }
 
+register_activation_hook(__FILE__, 'foreman_db_install');
+function foreman_db_install() {
+  global $wpdb;
+  $foreman_db_version = "1.0";
+  $table_name = $wpdb->prefix."termmeta";
+  $sql = "CREATE TABLE $table_name (
+    meta_id bigint(20) unsigned NOT NULL auto_increment,
+    term_id bigint(20) unsigned NOT NULL default '0',
+    meta_key varchar(255) default NULL,
+    meta_value longtext,
+    PRIMARY KEY  (meta_id),
+    KEY term_id (term_id),
+    KEY meta_key (meta_key)
+  );";
+  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+  dbDelta($sql);
+  add_option("foreman_db_version", $foreman_db_version);
+}
+
 require_once('includes/core.php');
 require_once('includes/helpers.php');
 require_once('includes/ajax.php');
 require_once('includes/post_type.class.php');
 require_once('includes/taxonomy.class.php');
 require_once('includes/widget.class.php');
+require_once('includes/metabox.class.php');
 require_once('includes/field.class.php');
 require_once('includes/fields/text.class.php');
 require_once('includes/fields/text_small.class.php');

@@ -129,35 +129,6 @@ function foreman_current_post_status($post, $post_type) {
   }
 }
 
-function foreman_get_all_tax_meta($term_id) {
-  $id = (is_object($term_id)) ? $term_id->term_id : $term_id;
-  return get_option('tax_meta_'.$id);
-}
-
-function foreman_get_tax_meta($term_id, $key, $multi = false) {
-  $id = (is_object($term_id)) ? $term_id->term_id : $term_id;
-  $meta = get_option('tax_meta_'.$id);
-  if (isset($meta[$key])) {
-    return $meta[$key];
-  } else {
-    return '';
-  }
-}
-
-function foreman_delete_tax_meta($term_id, $key) {
-  $meta = get_option('tax_meta_'.$term_id);
-  if (isset($meta[$key])) {
-    unset($meta[$key]);
-  }
-  update_option('tax_meta_'.$term_id, $meta);
-}
-
-function foreman_update_tax_meta($term_id, $key, $value) {
-  $meta = get_option('tax_meta_'.$term_id);
-  $meta[$key] = $value;
-  update_option('tax_meta_'.$term_id, $meta);
-}
-
 function foreman_truncate($str, $length=10, $trailing='...') {
   $length -= mb_strlen($trailing);
   if (mb_strlen($str) < $length) return $str;
@@ -179,4 +150,63 @@ function foreman_current_page_url() {
 function foreman_html_mail($to, $subject, $message, $headers=array('Content-type: text/html'), $attachments=array()) {
   $headers = array_merge(array('Content-type: text/html'), $headers);
   return wp_mail($to, $subject, $message, $headers, $attachments);
+}
+
+if (!function_exists('add_term_meta')) {
+  function add_term_meta($term_id, $meta_key, $meta_value, $unique = false) {
+    return add_metadata('term', $term_id, $meta_key, $meta_value, $unique);
+  }
+}
+
+if (!function_exists('delete_term_meta')) {
+  function delete_term_meta($term_id, $meta_key, $meta_value = '') {
+    return delete_metadata('term', $term_id, $meta_key, $meta_value);
+  }
+}
+
+if (!function_exists('get_term_meta')) {
+  function get_term_meta($term_id, $key = '', $single = false) {
+    return get_metadata('term', $term_id, $key, $single);
+  }
+}
+
+if (!function_exists('update_term_meta')) {
+  function update_term_meta($term_id, $meta_key, $meta_value, $prev_value = '')  {
+    return update_metadata('term', $term_id, $meta_key, $meta_value, $prev_value);
+  }
+}
+
+if (!function_exists('delete_term_meta_by_key')) {
+  function delete_term_meta_by_key($term_meta_key) {
+    return delete_metadata('term', null, $term_meta_key, '', true);
+  }
+}
+
+if (!function_exists('get_term_custom')) {
+  function get_term_custom($term_id = 0) {
+    $term_id = absint($term_id);
+    return !$term_id ? null : get_term_meta($term_id);
+  }
+}
+
+if (!function_exists('get_term_custom_keys')) {
+  function get_term_custom_keys($term_id = 0) {
+    $custom = get_term_custom($term_id);
+    if (!is_array($custom)) {
+      return;
+    }
+    if ($keys = array_keys($custom)) {
+      return $keys;
+    }
+  }
+}
+
+if (!function_exists('get_term_custom_values')) {
+  function get_term_custom_values($key = '', $term_id = 0) {
+    if (!$key) {
+      return null;
+    }
+    $custom = get_term_custom($term_id);
+    return isset($custom[$key]) ? $custom[$key] : null;
+  }
 }

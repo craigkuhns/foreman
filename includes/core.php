@@ -1,6 +1,7 @@
 <?php
 class Foreman {
   static protected $_post_types;
+  static protected $_meta_boxes;
   static protected $_taxonomies;
   static protected $_widgets;
 
@@ -8,9 +9,13 @@ class Foreman {
   static public function init() {
     add_action('admin_enqueue_scripts', array('Foreman', 'load_assets'));
     add_action('widgets_init', array('Foreman', 'load_widgets'));
-    if (isset($_GET['foreman_force_send']) && $_GET['foreman_force_send'] == true) { 
+    if (isset($_GET['foreman_force_send']) && $_GET['foreman_force_send'] == true) {
       add_filter('attribute_escape', array('Foreman', 'set_insert_button_label'), 10, 2);
     }
+  }
+
+  static public function register_meta_box($meta_box) {
+    self::$_meta_boxes[$meta_box->id] = $meta_box;
   }
 
   static public function register_post_type($post_type) {
@@ -50,6 +55,6 @@ class Foreman {
   }
 
   static public function set_insert_button_label($safe_text, $text) {
-    return str_replace(__('Insert into Post'), $_GET['foreman_send_label'], $text);    
+    return str_replace(__('Insert into Post'), $_GET['foreman_send_label'], $text);
   }
 }
