@@ -1,7 +1,6 @@
 <?php
-  $available_statuses = $foreman_post_type->statuses();
-  $current_post_status = $foreman_post_type->get_current_or_default_status($post->post_status);
-  //pretty_print_r($foreman_post_type->statuses_available_for_state($current_post_status));
+  $available_statuses = foreman_post_type_statuses($post); //$foreman_post_type->statuses();
+  $current_post_status = foreman_post_type_current_or_default_status($post);//$foreman_post_type->get_current_or_default_status($post->post_status);
 ?>
 <div class="submitbox" id="submitpost">
   <div id="minor-publishing">
@@ -39,7 +38,7 @@
           <div id="post-status-select" class="hide-if-js">
             <input type="hidden" name="hidden_post_status" id="hidden_post_status" value="<?php echo esc_attr($current_post_status); ?>" />
             <select name='post_status' id='post_status' tabindex='4'>
-              <?php foreach ($foreman_post_type->statuses_available_for_state($current_post_status) as $status_id => $status_name) { ?>
+              <?php foreach (foreman_post_type_statuses_available_for_status($post) as $status_id => $status_name) { ?>
                 <option <?php if ($post->post_status == $status_id) echo "selected='selected'" ?> value="<?php echo $status_id ?>"><?php echo $status_name ?></option>
               <?php } ?>
             </select>

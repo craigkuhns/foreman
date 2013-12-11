@@ -1,5 +1,11 @@
 <?php
 
+function pretty_print_r($val) {
+  echo '<pre><code>';
+  print_r($val);
+  echo '</code></pre>';
+}
+
 function foreman_cpt_labels($singular, $plural) {
   return array(
     'name' => $plural,
@@ -36,103 +42,6 @@ function foreman_taxonomy_labels($singular, $plural) {
     'choose_from_most_used' => "Choose from the most used $plural",
     'menu_name' => $plural,
   );
-}
-
-function foreman_field_wrapper_attributes($field, $parent = null, $position = null) {
-  $attributes = array();
-  $attributes['id'] = foreman_field_wrapper_id($field, $parent, $position);
-  $attributes['class'] = 'cf '.get_class($field);
-  if (is_array($field->visible_on)) {
-    $attributes['class'] = $attributes['class'].' foreman-visible-on';
-    $attributes['data-visible-on-id'] = '#'.foreman_field_id($field->visible_on['id'], $parent, $position);
-    $attributes['data-visible-on-value'] = join($field->visible_on['value'], ',');
-    $attributes['style'] = 'display: none;';
-  }
-  return foreman_html_attrs_from_array($attributes);
-}
-
-function foreman_html_attrs_from_array($attrs) {
-  $ret = array();
-  foreach ($attrs as $key => $val) {
-    $ret[] = "$key='$val'";
-  }
-  return implode(' ', $ret);
-}
-
-function foreman_template_path($template) {
-  return FOREMAN_PATH.'templates/'.$template;
-}
-
-function foreman_field_name($field, $parent=null, $position=null) {
-  $field_id = (is_object($field)) ? $field->id : $field;
-  if ($parent != null) {
-    if (is_null($position)) $position = '{position-placeholder}';
-    return "{$parent->id}[$position][{$field_id}]";
-  } else {
-    return $field_id;
-  }
-}
-
-function foreman_field_id($field, $parent=null, $position=null) {
-  $field_id = (is_object($field)) ? $field->id : $field;
-  if ($parent != null) {
-    if (is_null($position)) $position = '{position-placeholder}';
-    return "{$parent->id}-$position-{$field_id}";
-  } else {
-    return $field_id;
-  }
-}
-
-function foreman_field_wrapper_id($field, $parent=null, $position=null) {
-  $field_id = (is_object($field)) ? $field->id : $field;
-  if ($parent != null) {
-    if (is_null($position)) $position = '{position-placeholder}';
-    return "{$parent->id}-$position-{$field_id}-field-wrapper";
-  } else {
-    return $field_id.'-field-wrapper';
-  }
-}
-
-function pretty_print_r($val) {
-  echo '<pre><code>';
-  print_r($val);
-  echo '</code></pre>';
-}
-
-function foreman_meta_box_visible_for_status($meta_box, $status) {
-  if ($meta_box['visible'] == 'all') return true;
-  if ($meta_box['visible'] == 'none') return false;
-  if (is_array($meta_box['visible'])) return in_array($status, $meta_box['visible']);
-}
-
-function foreman_meta_box_editable_for_status($meta_box, $status) {
-  if ($meta_box['editable'] == 'all') return true;
-  if ($meta_box['editable'] == 'none') return false;
-  if (is_array($meta_box['editable'])) return in_array($status, $meta_box['editable']);
-}
-
-function foreman_get_admin_post() {
-  $post_id = absint(isset($_GET['post']) ? $_GET['post'] : (isset($_POST['post_ID']) ? $_POST['post_ID'] : 0));
-  $temp_post = $post_id != 0 ? get_post($post_id) : false; // Post Object, like in the Theme loop
-  return $temp_post;
-}
-
-function foreman_current_post_status($post, $post_type) {
-  if ($post_type->has_custom_statuses()) {
-    if (isset($post->post_status) && in_array($post->post_status, array_keys($post_type->statuses()))) {
-      return $post->post_status;
-    } else {
-      return $post_type->default_post_status();
-    }
-  } else {
-    return $post->post_status;
-  }
-}
-
-function foreman_truncate($str, $length=10, $trailing='...') {
-  $length -= mb_strlen($trailing);
-  if (mb_strlen($str) < $length) return $str;
-  return mb_substr($str,0,$length).$trailing;
 }
 
 function foreman_current_page_url() {
@@ -209,4 +118,187 @@ if (!function_exists('get_term_custom_values')) {
     $custom = get_term_custom($term_id);
     return isset($custom[$key]) ? $custom[$key] : null;
   }
+}
+
+function foreman_field_id($field) {
+  if (isset($field['parent'])) {
+    $position = (isset($field['position'])) ? $field['position'] : '{position-placeholder}';
+    return $field['parent']['id'].'-'.$position.'-'.$field['id'];
+  } else {
+    return $field['id'];
+  }
+}
+
+function foreman_visible_on_id($field) {
+  if (isset($field['parent'])) {
+    $position = (isset($field['position'])) ? $field['position'] : '{position-placeholder}';
+    return $field['parent']['id'].'-'.$position.'-'.$field['visible_on']['id'];
+  } else {
+    return $field['visible_on']['id'];
+  }
+}
+
+function foreman_field_wrapper_id($field) {
+  if (isset($field['parent'])) {
+    $position = (isset($field['position'])) ? $field['position'] : '{position-placeholder}';
+    return $field['parent']['id'].'-'.$position.'-'.$field['id'].'-field-wrapper';
+  } else {
+    return $field['id'].'-field-wrapper';
+  }
+}
+
+function foreman_field_name($field) {
+  if (isset($field['parent'])) {
+    $position = (isset($field['position'])) ? $field['position'] : '{position-placeholder}';
+    return $field['parent']['id'].'['.$position.']['.$field['id'].']';
+  } else {
+    return $field['id'];
+  }
+}
+
+function foreman_field_wrapper_attributes($field) {
+  $attributes = array();
+  $attributes['id'] = foreman_field_wrapper_id($field);
+  $attributes['class'] = 'cf '.$field['type'].'-field';
+  if (isset($field['visible_on']) && is_array($field['visible_on'])) {
+    $attributes['class'] .= ' foreman-visible-on';
+    $attributes['data-visible-on-id'] = '#'.foreman_visible_on_id($field);
+    $attributes['data-visible-on-value'] = join($field['visible_on']['value'], ',');
+    $attributes['style'] = 'display: none;';
+  }
+  if (isset($field['show_label']) && $field['show_label'] == false) {
+    $attributes['class'] .= ' hide-label';
+  }
+  return foreman_html_attrs_from_array($attributes);
+}
+
+function foreman_taxonomy_field_wrapper_attributes($field) {
+  $attributes = array();
+  $attributes['id'] = foreman_field_wrapper_id($field);
+  $attributes['class'] = $field['type'].'-field form-field foreman-taxonomy-field';
+  if (isset($field['visible_on']) && is_array($field['visible_on'])) {
+    $attributes['class'] .= ' foreman-visible-on';
+    $attributes['data-visible-on-id'] = '#'.foreman_visible_on_id($field);
+    $attributes['data-visible-on-value'] = join($field['visible_on']['value'], ',');
+    $attributes['style'] = 'display: none;';
+  }
+  return foreman_html_attrs_from_array($attributes);
+}
+
+function foreman_widget_field_wrapper_attributes($field) {
+  $attributes = array();
+  $attributes['id'] = foreman_field_wrapper_id($field);
+  $attributes['class'] = $field['type'].'-field foreman-widget-field';
+  if (isset($field['visible_on']) && is_array($field['visible_on'])) {
+    $attributes['class'] .= ' foreman-visible-on';
+    $attributes['data-visible-on-id'] = '#'.foreman_visible_on_id($field);
+    $attributes['data-visible-on-value'] = join($field['visible_on']['value'], ',');
+    $attributes['style'] = 'display: none;';
+  }
+  return foreman_html_attrs_from_array($attributes);
+}
+
+function foreman_html_attrs_from_array($attrs) {
+  $ret = array();
+  foreach ($attrs as $key => $val) {
+    $ret[] = "$key='$val'";
+  }
+  return implode(' ', $ret);
+}
+
+function foreman_post_type_statuses($post) {
+  return Foreman::post_type_statuses($post);
+}
+
+function foreman_post_type_current_or_default_status($post) {
+  $statuses = foreman_post_type_statuses($post);
+  if (in_array($post->post_status, array_keys($statuses))) {
+    return $post->post_status;
+  } else {
+    return foreman_post_type_default_post_status($post);
+  }
+}
+
+function foreman_current_post_status($post) {
+  $statuses = foreman_post_type_statuses($post);
+  if (!empty($statuses)) {
+    if (isset($post->post_status) && in_array($post->post_status, array_keys($statuses))) {
+      return $post->post_status;
+    } else {
+      return foreman_post_type_default_post_status($post);
+    }
+  } else {
+  }
+}
+
+function foreman_post_type_default_post_status($post) {
+  $statuses = foreman_post_type_statuses($post);
+  if (!empty($statuses) && is_array($statuses)) {
+    reset($statuses);
+    return key($statuses);
+  } else {
+    return $draft;
+  }
+}
+
+function foreman_meta_box_visible_for_status($meta_box, $status) {
+  if (isset($meta_box['visible'])) {
+    if ($meta_box['visible'] == 'all') return true;
+    if ($meta_box['visible'] == 'none') return false;
+
+    $visible_on = (is_array($meta_box['visible'])) ? $meta_box['visible'] : array($meta_box['visible']);
+    return in_array($status, $visible_on);
+  }
+  return true;
+}
+
+function foreman_meta_box_editable_for_status($meta_box, $status) {
+  if (isset($meta_box['editable'])) {
+    if ($meta_box['editable'] == 'all') return true;
+    if ($meta_box['editable'] == 'none') return false;
+
+    $editable_on = (is_array($meta_box['editable'])) ? $meta_box['editable'] : array($meta_box['editable']);
+    return in_array($status, $editable_on);
+  }
+  return true;
+}
+
+function foreman_get_admin_post() {
+  $post_id = absint(isset($_GET['post']) ? $_GET['post'] : (isset($_POST['post_ID']) ? $_POST['post_ID'] : 0));
+  $temp_post = $post_id != 0 ? get_post($post_id) : false; // Post Object, like in the Theme loop
+  if (!$temp_post) {
+    $temp_post = new ForemanDummyPost(array(
+      'post_type' => (isset($_GET['post_type'])) ? $_GET['post_type'] : 'post',
+      'post_status' => 'draft'
+    ));
+  }
+  return $temp_post;
+}
+
+function foreman_post_type_statuses_available_for_status($post) {
+  $current_status = foreman_post_type_current_or_default_status($post);
+  $all_statuses = foreman_post_type_statuses($post);
+  $transitions = foreman_post_type_transitions($post);
+  if (isset($transitions[$current_status]) && !empty($transitions[$current_status])) {
+    $available_statuses = array($current_status => $all_statuses[$current_status]);
+    foreach ($transitions[$current_status] as $transition) {
+      $available_statuses[$transition['to']] = $all_statuses[$transition['to']];
+    }
+    return $available_statuses;
+  } else {
+    return $all_statuses;
+  }
+}
+
+function foreman_post_type_transitions($post) {
+  return Foreman::post_type_transitions($post);
+}
+
+function foreman_get_select_options_from_taxonomy_terms($taxonomy) {
+  $options = array();
+  $terms = get_terms($taxonomy);
+  foreach ($terms as $term) {
+    $options[] = array('name' => $term->name, 'value' => $term->term_id);
+  }
+  return $options;
 }

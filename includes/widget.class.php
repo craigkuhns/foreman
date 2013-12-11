@@ -1,66 +1,55 @@
 <?php
 class ForemanWidget extends WP_Widget {
-  protected $_widget_id = '';
-  protected $_widget_name = '';
-  protected $_widget_args = array();
-  protected $_widget_template = '';
+  protected $_id = '';
+  protected $_name = '';
+  protected $_description = '';
+  protected $_template = '';
   protected $_fields = array();
+  public $_form_instance_data = null;
 
-  public function __construct() {
-    parent::__construct($this->_widget_id, $this->_widget_name, $this->_widget_args);
-  }
+  public function __construct($settings) {
+    $this->_id = $settings['id'];
+    $this->_name = $settings['name'];
+    $this->_description = $settings['description'];
+    $this->_template = $settings['template'];
+    $this->_fields = $settings['fields'];
 
-  public function set_widget_params($id, $name, $args) {
-    $this->_widget_id = $id;
-    $this->_widget_name = $name;
-    $this->_widget_args = $args;
-  }
-
-  public function add_fields($fields) {
-    foreach ($fields as $field) {
-      $this->add_field($field);
-    }
-  }
-
-  public function add_field($field) {
-    $this->_fields[$field->id] = $field;
-  }
-
-  public function set_template($path) {
-    $this->_widget_template = $path;
+    parent::__construct($this->_id, $this->_name, array('description' => $this->_description));
   }
 
   public function form($instance) {
+    $this->_form_instance_data = $instance;
     foreach ($this->_fields as $field) {
-      //$value = get_post_meta($post->ID, $field->id, true);
-      echo '<p>';
-      $field->render_for_widget($this, $instance);
+      echo '<p '.foreman_widget_field_wrapper_attributes($field).'>';
+      do_action('foreman_render_'.$field['type'], 'widget', $this, $field);
       echo '</p>';
     }
+  }
+
+  public function get_field($key) {
+    $data = (isset($this->_form_instance_data[$key])) ? $this->_form_instance_data[$key] : null;
+    return $data;
   }
 
   public function update($new_instance, $old_instance) {
     $instance = array();
     foreach ($this->_fields as $field) {
-      if (isset($new_instance[$field->id])) {
-        $instance[$field->id] = $field->validate($new_instance[$field->id]);
+      if (isset($new_instance[$field['id']])) {
+        $instance[$field['id']] = apply_filters('foreman_validate_'.$field['type'],$new_instance[$field['id']], $field);
       }
     }
     return $instance;
   }
 
   public function widget($args, $instance) {
-    $widget = $instance;
+    /*$widget = $instance;
     extract($args);
     echo $before_widget;
     if (isset($instance['title']) && !empty($instance['title'])) {
       echo $before_title.$this->formated_title($instance).$after_title;
     }
     include $this->_widget_template;
-    echo $after_widget;
-  }
-
-  public function formated_title($instance) {
-    return apply_filters('widget_title', $instance['title']);
+    echo $after_widget;*/
+    echo "This is your widget baby";
   }
 }

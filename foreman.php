@@ -44,34 +44,36 @@ function foreman_db_install() {
   add_option("foreman_db_version", $foreman_db_version);
 }
 
-require_once('includes/core.php');
-require_once('includes/helpers.php');
-require_once('includes/ajax.php');
-require_once('includes/post_type.class.php');
-require_once('includes/taxonomy.class.php');
-require_once('includes/widget.class.php');
-require_once('includes/metabox.class.php');
-require_once('includes/field.class.php');
-require_once('includes/fields/text.class.php');
-require_once('includes/fields/text_small.class.php');
-require_once('includes/fields/text_medium.class.php');
-require_once('includes/fields/textarea.class.php');
-require_once('includes/fields/textarea_small.class.php');
-require_once('includes/fields/textarea_code.class.php');
-require_once('includes/fields/select.class.php');
-require_once('includes/fields/date.class.php');
-require_once('includes/fields/date_timestamp.class.php');
-require_once('includes/fields/datetime.class.php');
-require_once('includes/fields/datetime_timestamp.class.php');
-require_once('includes/fields/money.class.php');
-require_once('includes/fields/radio.class.php');
-require_once('includes/fields/checkbox.class.php');
-require_once('includes/fields/boolean.class.php');
-require_once('includes/fields/wysiwyg.class.php');
-require_once('includes/fields/file.class.php');
-require_once('includes/fields/colorpicker.class.php');
-require_once('includes/fields/repeater.class.php');
-require_once('includes/fields/table_repeater.class.php');
-require_once('includes/fields/related_posts.class.php');
+require 'includes/helpers.php';
+require 'includes/ajax.php';
+require 'includes/widget.class.php';
+require 'includes/dummy_post.class.php';
+require 'includes/core.php';
+
+$core_fields = array(
+  'text',
+  'text_small',
+  'text_medium',
+  'money',
+  'date',
+  'date_timestamp',
+  'datetime',
+  'datetime_timestamp',
+  'textarea',
+  'textarea_code',
+  'textarea_small',
+  'boolean',
+  'checkbox',
+  'radio',
+  'select',
+  'wysiwyg',
+  'file',
+  'colorpicker',
+  'repeater',
+  'table_repeater'
+  );
+foreach ($core_fields as $core_field) {
+  require 'includes/fields/'.$core_field.'/'.$core_field.'.php';
+}
 
 Foreman::init();

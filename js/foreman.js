@@ -13,7 +13,7 @@ jQuery(function() {
 
 var visible_on = {
   init: function() {
-    jQuery('li.foreman-visible-on').each(function() {
+    jQuery('.foreman-visible-on').each(function() {
       var el = jQuery(this);
       jQuery(jQuery(el).attr('data-visible-on-id')).change(function() {
         var visible_on_options = jQuery(el).attr('data-visible-on-value').split(',');
@@ -39,44 +39,17 @@ var visible_on = {
 var datepickers = {
   globaly_initialized: false,
   init: function() {
-    jQuery('.foreman-field-list .text-date').datepicker();
-    jQuery('.foreman-field-list .text-datetime').datetimepicker({ampm:true});
+    jQuery('.foreman-field-list .text-date, .foreman-taxonomy-field .text-date, .foreman-widget-field .text-date').datepicker();
+    jQuery('.foreman-field-list .text-datetime, .foreman-taxonomy-field .text-datetime, .foremna-widget-field .text-datetime').datetimepicker({ampm:true});
     if (datepickers.globaly_initialized == false) jQuery("#ui-datepicker-div").wrap('<div class="foreman_element" />');
     if (datepickers.globaly_initialized == false) datepickers.globaly_initialized = true;
   }
 }
 
-var file_uploader = {
-  current_field_id: '',
-  init: function() {
-    jQuery(".upload").live('click', function() {
-      var field_id = "#"+jQuery(this).attr('data-input-id');
-      var field_label = "Use as "+jQuery(this).attr('data-use-as-label');
-      file_uploader.current_field_id = field_id;
-      formfield = jQuery(field_id).attr('name');
-      tb_show('', 'media-upload.php?type=file&foreman_force_send=true&foreman_send_label='+field_label+'&TB_iframe=true');
-
-      var old_send_to_editor = window.send_to_editor;
-      window.send_to_editor = function(html) {
-        if (jQuery('img', '<div>'+html+'</div>').attr('src')) {
-          var url = jQuery('img', '<div>'+html+'</div>').attr('src');
-        } else {
-          var url = jQuery('a', '<div>'+html+'</div>').attr('href');
-        }
-        jQuery(file_uploader.current_field_id).val(url);
-        tb_remove();
-        file_uploader.current_field_id = '';
-        window.send_to_editor = old_send_to_editor;
-      }
-      return false;
-    });
-  }
-};
-
 var colorpicker = {
   count: 0,
   init: function() {
-    jQuery('.foreman-field-list .text-colorpicker').each(function () {
+    jQuery('.foreman-field-list .text-colorpicker, .foreman-taxonomy-field .text-colorpicker, .foreman-widget-field .text-colorpicker').each(function () {
       if (!jQuery(this).hasClass('hasColorpicker')) {
         colorpicker.count = colorpicker.count + 1;
         jQuery(this).after('<div id="picker-' + colorpicker.count + '" style="z-index: 1000; background: #EEE; border: 1px solid #CCC; position: absolute; display: block;"></div>');
@@ -117,7 +90,7 @@ var repeater = {
       datepickers.init();
       colorpicker.init();
       visible_on.init();
-      jQuery(repeater_block).find('> li:last-child').hide().fadeIn().find('.ForemanWysiwygField .input').html('<p class="foreman-notice">Save this post in order to edit using the wysiwyg editor.</p>');
+      jQuery(repeater_block).find('> li:last-child').hide().fadeIn().find('.wysiwyg-field .input').html('<p class="foreman-notice">Save this post in order to edit using the wysiwyg editor.</p>');
       return false;
     });
   }
@@ -216,3 +189,31 @@ var post_form = {
     });
   }
 }
+
+var file_uploader = {
+  init: function() {
+    jQuery(".upload").live('click', function(event) {
+      event.preventDefault();
+
+      var field_id = "#"+jQuery(this).attr('data-input-id');
+      var field_label = jQuery(this).attr('data-use-as-label');
+      var file_frame;
+
+
+      file_frame = wp.media.frames.file_frame = wp.media({
+        title: "Upload "+field_label,
+        button: {
+          text: "Use as "+field_label
+        },
+        multiple: false
+      });
+
+      file_frame.on('select', function() {
+        attachment = file_frame.state().get('selection').first().toJSON();
+        jQuery(field_id).val(attachment.url);
+      });
+
+      file_frame.open();
+    })
+  }
+};

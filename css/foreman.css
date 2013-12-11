@@ -28,30 +28,33 @@
   margin-left: 18%;
   padding: 0;
 }
-.foreman-field-list .foreman-repeater .foreman-repeater-block {
+.foreman-repeater .foreman-repeater-block {
   background-color: #fff;
   border: 1px solid #dfdfdf;
   border-radius: 3px;
   padding: 5px 10px 10px 10px;
 }
-.foreman-field-list .foreman-repeater .label {
+.foreman-repeater .label {
   float: none;
   width: auto;
 }
-.foreman-field-list .foreman-repeater .label label {
+.foreman-repeater .label label {
   padding: 5px 0 0 0;
   text-align: left;
 }
-.foreman-field-list .foreman-repeater .input {
+.foreman-repeater .input {
   margin-left: 0;
   padding-right: 0;
 }
-.foreman-field-list .foreman-field-description {
+.foreman-field-list .foreman-field-description,
+.foreman-taxonomy-field .foreman-field-description {
   clear: both;
   color: #afafaf;
   font-style: italic;
   margin: 2px 0 0 0;
 }
+.foreman-field-list .label .foreman-field-description,
+.foreman-taxonomy-field .label .foreman-field-description { padding: 0 10px 0 0; }
 .foreman-field-list li {
   border-bottom: 1px solid #e9e9e9;
   margin: 0 0 5px 0;
@@ -179,4 +182,30 @@ p.foreman-uneditable-form-value {
   margin: 0 auto;
   text-align: center;
   width: 40px;
+}
+.foreman-taxonomy-field input.text-small { width: 25%; }
+.foreman-taxonomy-field input.text-date { width: 25%; }
+.foreman-taxonomy-field input.text-datetime { width: 25%; }
+.foreman-taxonomy-field input.text-medium { width: 50%; }
+.foreman-taxonomy-field input.text-file { width: 50%; }
+.foreman-taxonomy-field input.text-colorpicker { width: 25%; }
+.foreman-taxonomy-field input.text { width: 95%; }
+.foreman-taxonomy-field input.text-money { width: 25%; }
+.foreman-taxonomy-field textarea.textarea { width: 95%; }
+.foreman-taxonomy-field textarea.textarea-code { width: 95%; }
+.foreman-taxonomy-field textarea.textarea-small { width: 25%; }
+.foreman-taxonomy-field .foreman-repeater { width: 95%; }
+.foreman-taxonomy-field .foreman-add-repeater-block { margin-right: 5%; }
+
+.foreman-taxonomy-field .foreman-repeater .input,
+.foreman-taxonomy-field .foreman-repeater textarea.textarea,
+.foreman-taxonomy-field .foreman-repeater textarea.textarea_code,
+.foreman-taxonomy-field .foreman-repeater input.text { width: 100%; }
+
+.hide-label > .label { display: none; }
+.hide-label > .foreman-table-repeater,
+.hide-label > .foreman-repeater,
+.hide-label > .input {
+  margin-left: 0;
+  width: 100%;
 }
